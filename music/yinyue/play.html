@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet/less" type="text/less" href="./cs/style.less">
+    <script src="./less.min.js"></script>
+    <title>网易云音乐</title>
+</head>
+
+<body>
+   <play>
+       <div class="upcontent">
+            <div class="bj"></div>
+            <div class="playsongs">
+                <div class="logo">
+                    <img src="./img/logo3.png" alt="">
+                </div>
+                <div class="zhen"></div>
+                <div class="musicbox">
+                       
+                </div>
+                 </div>
+            </div>
+        </div>
+        <div class="downcontent">
+                <div class="lyric">
+                        <div class="song_info">
+                            <div class="if">
+                                    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search_more">
+                        <span>查看完整歌词&gt</span>
+                    </div>       
+           <div class="other">
+               <div class="morelist">
+                   <h2>
+                       包含这首歌的歌单
+                    </h2>
+                   <ul id="similar">
+                       
+                   </ul>
+               </div>
+               <h3>相似歌曲推荐</h3>
+               <div class="moresongs">
+               
+               </div>
+               <div class="morenewcom">
+                   <p>精彩评论<p>
+                   <div class="pl">
+                        
+                    </div>
+                    <div class="open">
+                        <span class="more_pl">打开云音乐查看更多评论</span>
+                    </div>
+                </div>
+               </div>
+               <div class="footer">
+                    <span>打 开</span>
+                    <span>下 载</span>
+                </div>
+        </div>
+            
+   </play>
+   <div id="au"></div>
+</body>
+<script src="js.js"></script>
+<script type="module">
+    import mypromise from './promise.js'
+    function $(e){
+      return document.querySelector(e)
+    }
+let string=location.search
+let reg=/(?<=\?id=)\d+/
+let urlId=string.match(reg).toString()
+////////////////////////////////////////////歌曲渲染//////////////////////////////////////////////////////////////////////
+mypromise("http://localhost:3000/song/url?id="+urlId).then(data=>{
+    let output=""
+    data.data.forEach(value=>{
+    output=
+    `
+    <audio id="au1" src="${value.url}"></audio>
+    `
+    })
+    $("#au").innerHTML=output
+    start()
+})
+////////////////////////////////////////////////歌词渲染///////////////////////////////////////////////////////////////////
+let second
+let a
+let ppxx
+let arr=[]
+let currentLine=0
+mypromise("http://localhost:3000/lyric?id="+urlId).then(data=>{
+    console.log(data.lrc.lyric)
+    let reg=/(?<=\[\d+\:\d+\.\d+\])(.+|\s)/g
+    let ly=data.lrc.lyric.match(reg)
+    // console.log(ly)
+    let output=""
+    ly.forEach(val=>{
+        output+=
+        `
+        <span>${val} &nbsp;</span>
+        `
+    $(".if").innerHTML=output
+    })
+    let span= document.querySelectorAll(".if>span")
+    console.log(span[9].offsetHeight)
+    let reg1=/\d+\:\d+\.\d+/g
+    let time=data.lrc.lyric.match(reg1)
+    // console.log(time)
+    time.forEach(val=>{
+        let a=val.split(":")
+        // console.log(a)
+        second=(a[0])*60+parseFloat(a[1])
+        // console.log(second)
+        arr.push(second)
+    })
+    console.log(arr)
+    arr[time.length]=arr[time.length-1]+3
+    $("#au1").ontimeupdate=function(){
+        // console.log(($("#au1").currentTime))
+        for(currentLine=1;currentLine<=time.length;currentLine++)
+    {
+        if($("#au1").currentTime<arr[currentLine+1]&&$("#au1").currentTime>arr[currentLine]){
+                currentLine=currentLine
+                ppxx = 0-currentLine*30
+                $(".if").style.marginTop = ppxx+"px"
+                span[currentLine-1].style.color="black"
+                span[currentLine].style.color="white"
+                // span[currentLine].style.fontWeight="bold"
+                span[currentLine].style.fontSize="16px"
+                break  
+        }
+    }
+    }
+    
+    // console.log(arr)
+ 
+})
+//////////////////////////////////////////////歌曲转盘渲染////////////////////////////////////////////////////////////////
+
+mypromise("http://localhost:3000/song/detail?ids="+urlId).then(data=>{
+    let output=""
+    data.songs.forEach(value=>{
+    output=
+    `
+    <div class="bj" style="background-image:url(${value.al.picUrl})"></div>
+            <div class="playsongs">
+                <div class="logo">
+                    <img src="./img/logo3.png" alt="">
+                </div>
+                <div class="zhen"></div>
+                <div class="musicbox">
+                        <div class="songwrap">
+                                <div class="smallimg" style="background-image:url(${value.al.picUrl})"></div>
+                                <div class="smallimg2"></div>            
+                            </div>
+                            <div class="bofang"></div>
+                            <div class="title">
+                                <h4>
+                                    <span>${value.name}</span>
+                                </h4>
+                </div>
+                 </div>
+            </div>
+    `
+    })
+    $(".upcontent").innerHTML=output
+    })
+//////////////////////////////////////////////包含这首歌的歌单渲染////////////////////////////////////////////////////////
+
+mypromise("http://localhost:3000/simi/playlist?id="+urlId).then(data=>{
+    let output=""
+    data.playlists.forEach(value=>{
+    output+=
+    `
+    <li>
+        <a href="one_img.html?id=${value.id}&?pic=${value.coverImgUrl}">
+        <img src="${value.coverImgUrl}" alt="">
+        <h3 class="intro">${value.name}</h3>
+        <p>
+          <span>
+           by ${value.creator.nickname}
+          </span>
+        </p>
+     </li>
+    `
+    })
+    $("#similar").innerHTML=output
+})
+//////////////////////////////////////////////////相似歌曲渲染///////////////////////////////////////////////////////////
+
+mypromise("http://localhost:3000/simi/song?id="+urlId).then(data=>{
+    let output=""
+    data.songs.forEach(value=>{
+        let singers ="";
+        value.album.artists.forEach(val=>{ singers+= val.name+" "})
+            
+            output+=
+    `
+    <a href="play.html?id=${value.id}">
+    <ul>
+                        <li class="images">
+                            <img src="${value.album.picUrl}" alt="">
+                        </li>
+                        <li class="intro">
+                            <ul>
+                                <li>
+                                    <p>${value.album.name}</p>
+                                    <span></span>
+                                </li>
+                                <li>
+                                    <div class="small_box">
+                                        <span>${singers}</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="bo">
+                            <div class="bf"></div>
+                        </li>
+    </ul>
+    `
+        })
+        $(".moresongs").innerHTML=output
+    })
+//////////////////////////////////////////////////////////歌曲评论渲染/////////////////////////////////////////////////////
+
+mypromise("http://localhost:3000/comment/music?limit=1&id="+urlId).then(data=>{
+    let output=""
+    data.hotComments.forEach(value=>{
+    output+=
+    `
+    <ul>
+                            <li>
+                                <img src="${value.user.avatarUrl}" alt="">
+                            </li>
+                            <li>
+                                <div class="top">
+                                    <div class="name">
+                                        <div class="name_id">
+                                            <span>${value.user.nickname}</span>
+                                        </div>
+                                        <div class="date">
+                                            <span>${value.time}</span>
+                                        </div>
+                                    </div>
+                                    <div class="zan">
+                                        <ul>
+                                            <li>
+                                                <span>${value.likedCount}</span>
+                                            </li>
+                                            <li>
+                                                <img src="./img/zan.png" alt="">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="word">
+                                    <span>${value.content}</span>
+                                </div>
+                            </li>
+                        </ul>
+    `
+    })
+    $(".pl").innerHTML=output
+})
+</script>
+</html>

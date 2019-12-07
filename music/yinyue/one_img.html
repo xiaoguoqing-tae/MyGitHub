@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet/less" type="text/less" href="./cs/style.less">
+    <script src="./less.min.js"></script>
+    <title>网易云音乐</title>
+</head>
+
+<body>
+    <imgclick>
+    <div class="topbox">
+        
+    </div>
+    <div class="intro">
+        
+    </div>
+    <div class="songlist">
+        <div class="title">
+            <span>歌曲列表</span>
+        </div>
+        <div class="list">
+
+        </div>
+    </div>
+    <div class="brilliant_pl">
+        <div class="title">
+            <span>精彩评论</span>
+        </div>
+        <div class="pl">
+            
+        </div>
+        <div class="more_pl">
+            <span>查看更多9999条精彩评论&gt</span>
+        </div>
+    </div>
+    <div class="footer">
+        <span>打开</span>
+        <span>下载</span>
+    </div>
+    </imgclick>
+</body>
+<script src="./js.js"></script>
+<script type="module">
+    import mypromise from './promise.js'
+    function $(e)
+    {
+        return document.querySelector(e)
+    }
+let string=location.search
+console.log(string)
+let reg=/(?<=\?id=)\d+/
+let urlId=string.match(reg).toString()
+console.log(urlId)
+let reg1=/(?<=\?pic=).+/
+let urlimg=string.match(reg1).toString()
+console.log(urlimg)
+mypromise("http://localhost:3000/playlist/detail?id="+urlId).then(data=>{
+    let output=
+    `
+    <div class="bj" style="background-image:url(${urlimg})"></div>
+        <div class="smallbox">
+            <img src="${urlimg}" alt=""> 
+            <ul>
+                <li>${data.playlist.name}</li>
+                <li>
+                    <div class="mini">
+                        <img src="${data.playlist.creator.avatarUrl}" alt="">
+                    </div>
+                    <span>${data.playlist.creator.nickname}</span>
+                </li>
+            </ul>
+        </div>
+    `
+    $(".topbox").innerHTML=output
+    
+    la()
+    let output1=
+    `
+    <ul>
+            <li>
+                <p>标签：</p>
+                <a>${data.playlist.tags}</a>
+            </li>
+            <li class="text">
+            <div>
+                <span id="jj">${data.playlist.description}</span>
+                <div class="down">
+                    <img src="./img/down.png" alt="">
+                </div>
+            </div>
+            </li>
+        </ul>
+    `
+    $(".intro").innerHTML=output1
+
+    let output2=""
+    let num2=0
+    data.playlist.tracks.forEach(values=>{
+        num2++
+        let songer=""
+        values.ar.forEach(values1=>{ songer+=values1.name+ " " })
+            output2+=
+
+    `
+    <a href="play.html?id=${values.id}">
+    <ul>
+                <li class="num1">
+                    <p>${num2}</p>
+                </li>
+                <li class="intro">
+                    <ul>
+                        <li>
+                            <p>${values.name}</p>
+                            <span></span>
+                        </li>
+                        <li>
+                            <div class="small_box">
+                                <div class="sq"></div>
+                                <span>${songer}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="bo">
+                   <div class="bf"> 
+                   </div>
+                </li>
+    </ul>
+</a>
+    `
+    })
+    $(".list").innerHTML=output2
+})
+mypromise("http://localhost:3000/comment/playlist?id="+urlId).then(data=>{
+    let output=""
+    console.log(data.comments)
+    data.comments.forEach(value=>{
+            output+=
+        `
+        <ul>
+                <li>
+                    <img src="${value.user.avatarUrl}" alt="">
+                </li>
+                <li>
+                    <div class="top">
+                        <div class="name">
+                            <div class="name_id">
+                                <span>${value.user.nickname}</span>
+                            </div>
+                            <div class="date">
+                                <span>2019年08月01日</span>
+                            </div>
+                        </div>
+                        <div class="zan">
+                            <ul>
+                                <li>
+                                    <span>${value.likedCount}</span>
+                                </li>
+                                <li>
+                                    <img src="./img/zan.png" alt="">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="word">
+                        <span>${value.content}</span>
+                    </div>
+                </li>
+            </ul>
+        `
+        })
+        $(".pl").innerHTML=output
+    })
+    
+</script>
+</html>

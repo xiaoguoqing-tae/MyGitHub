@@ -1,0 +1,23 @@
+.adapt(@index) when (@index<=@len)
+{
+        @media screen and (min-width: extract(@deviceWidth,@index))
+        {
+            html{font-size:@baseFont/@psdWidth * extract(@deviceWidth,@index)}  
+        }
+        .adapt(@index + 1);
+    }
+
+.changeline(@index) when (@index<=3)
+{
+    #a@{index}:checked~.blue_line li:nth-child(@{index}) label
+    {
+        color:#dd001b;
+        border-bottom: 2px solid #dd001b;
+    }
+    #a@{index}:checked~.ye>li:nth-child(@{index})
+    {
+        z-index: 1000;
+        display: block;
+    }
+    .changeline(@index + 1);
+}

@@ -1,0 +1,232 @@
+search
+{
+    display: block;
+    width: 100%;
+    .search_box
+    {
+        height: 61*@dw;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        margin-top: 20*@dw;      
+            .input_pic
+            {
+                width: 15*@dw;
+                height: 15*@dw;
+                position: absolute;
+                margin:-25px 5px 0 310px;
+                img
+                {
+                    width: 100%;
+                }
+            }
+            input
+            {
+                padding: 0 20*@dw 0 40*@dw;
+                border-radius: 50px;
+                border: 0;
+                background: #ebecec;
+                width: 341*@dw;
+                height: 31*@dw;
+            }
+      
+        span
+        {
+            position: absolute;
+            top:18*@dw;
+            right:30*@dw;
+            width:30*@dw;
+            height: 20*@dw;
+            cursor: pointer;
+            z-index: 999;
+        }
+    }
+    .hotsearch
+    {
+        width: 100%;
+        a{
+            text-decoration:none;
+        }
+        ul
+        {
+            width: 100%;
+            height: 55*@dw;
+            display: flex;
+            // justify-content: center;
+            border-bottom: 1px solid #f6f6f6;
+            padding-left: 8*@dw;
+            li:nth-child(1)
+            {
+                width: 308*@dw;
+                .left
+                {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+                li
+                    {
+                        width: 100%;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        word-break: normal;
+                        p
+                        {
+                            display: inline-block;
+                            vertical-align: middle;
+                            font-size: 17px;
+                            color: #333333;
+                        }
+                        span
+                        {
+                            display: inline-block;
+                            vertical-align: middle;
+                            font-size: 17px;
+                            color: #333333;
+                           
+                        }
+                    }
+                    .sq_box
+                    {
+                        width: 100%;
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: center;
+                        .sq
+                        {
+                            width: 12*@dw;
+                                height: 8*@dw;
+                                background: url(../img/hot.png) no-repeat;
+                                background-size:166*@dw 97*@dw;
+                        }
+                        span
+                        {
+                            font-size: 12px;
+                            color: #888888;
+                        }
+                    }
+                }
+            }
+            .bo
+            {
+                width: 42*@dw;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .bf
+                {
+                    width: 22*@dw;
+                    height: 22*@dw;
+                    background:url(../img/hot.png) -24*@dw 0 no-repeat;
+                    background-size: 166*@dw 97*@dw;
+                }
+            }
+        }
+        .title1
+        {
+            margin:10*@dw;
+        }
+        .list1
+        {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            .li1{
+                width: auto
+            }
+            li
+            {
+                width: auto;
+                height: 32*@dw;
+                margin: 10*@dw;
+                .key
+                {
+                    padding: 5*@dw;
+                    border:2px solid #f0f1f4;
+                    border-radius: 50px;
+                    width: auto;
+                    height: 32*@dw;
+                }
+            }
+        }
+        .jl{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            .history{
+                width: 100%;
+                display: flex;
+                height: 45*@dw;
+                align-items: center;
+            .box{
+
+                img{
+                    width: 35px;
+                    height: 35px; 
+                }
+                               
+               
+            }
+            p
+            {
+                width: 280*@dw;
+                color: #333333;
+                font-size: 15px;
+                padding-right: 10px;
+                padding-left: 10px
+            }
+            .box_x
+            {
+                margin-right: -10px;
+                img{
+                    width: 20px;
+                    height: 20px;
+                    
+                }
+                
+            }
+            }
+        }
+        .sear{
+            width: 100%;
+            height: 50*@dw;
+            margin-left: 10px;
+            padding-right: 10px;
+            font-size: 15px;
+            line-height: 50px;
+            color: #507daf;
+        }
+        .fdj{
+            width: 100%;
+            height: 45*@dw;
+            li
+            {
+                padding-left: 5px;
+                display: flex;
+                align-items: center;
+                .box{
+                    width: 30*@dw;            
+                    img
+                    {
+                        width: 35*@dw;
+                        height: 45*@dw;
+                        margin-right: 5px; 
+                }
+                p
+                {
+                    color: #333333;
+                    font-size: 15px;
+                    padding-right: 10px;
+                }
+            }
+        }
+    }
+  
+    }
+}

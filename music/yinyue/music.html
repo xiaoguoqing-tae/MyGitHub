@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet/less" type="text/less" href="./cs/style.less">
+    <script src="./less.min.js"></script>
+    <title>网易云音乐</title>
+</head>
+
+<body>
+        <header>
+                <div class="toper">
+                        <div class="logo">
+                            <img src="./img/logo.png" alt="">
+                        </div>
+                        <div class="download">
+                            <span>下载APP</span>
+                        </div>
+            </div>
+                <div class="selected">
+                        <input type="radio" name="a" id="a1" checked >
+                        <input type="radio" name="a" id="a2">
+                        <input type="radio" name="a" id="a3">
+                        <ul class="blue_line">
+                                <li>
+                                <label for="a1">推荐音乐</label> 
+                                </li>
+                                <li>
+                                    <label for="a2">热歌榜</label> 
+                                </li>
+                                <li>
+                                    <label for="a3">搜索</label> 
+                                </li>
+                            </ul>  
+                        <ul class="ye">
+                            <li>
+                                <div id="first">
+                                    <nav>
+                                        <div class="title">
+                                                        <div class="red_line"></div>
+                                                        <span>推荐歌单</span>
+                                                    </div>
+                                                    <div class="song">
+                                                        <ul id="cover">
+                                                        </ul>
+                                                    </div>
+                                    </nav>
+                                    <listmusic>
+                                            <div class="title">
+                                                    <div class="red_line"></div>
+                                                    <span>最新音乐</span>
+                                            </div>
+                                            <div class="list">
+                                            </div>
+                                    </listmusic>
+                                    <footer>
+                                            <div class="logo2">
+                                                <img src="./img/logo3.png" alt="">
+                                                </div>
+                                                <div class="openapp">
+                                                    <p>打开APP，发现更多好音乐</p>
+                                                </div>
+                                                <p class="copyright">网易公司版权所有©1997-2019 杭州乐读科技有限公司运营</p>
+                                    </footer>
+                                    </div>
+                            </li>
+                            <li>
+                                <div id="second">
+                                            <hot>
+                                                <div class="top2">
+                                                    <div class="bg"></div>
+                                                    <div class="date">
+                                                        <span>更新日期：07月29日</span>
+                                                    </div>
+                                                </div>
+                                                <div class="hotlist">
+                                                </div>
+                                                <div class="more">
+                                                    <span>查看完整榜单&gt</span>
+                                                </div>
+                                            </hot>
+                                        </div>
+                            </li>
+                            <li>
+                                <div id="third">
+                                            <search>
+                                                <div class="search_box">
+                                                    <div class="search1">
+                                                        <input id="search" type="text" placeholder="搜索歌曲，歌手，专辑">
+                                                        <div class="input_pic">
+                                                                <img src="./img/dacha.png" alt="">
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                                <div class="hotsearch">
+                                                    <div id="hotsearch1">
+                                                            <div class="title1">
+                                                                    <h3>热门搜索</h3>
+                                                                </div>
+                                                                <ul class="list1">
+                                                                    
+                                                                </ul>
+                                                                <div class="jl">
+                                                                   
+                                                                </div>
+                                                    </div>
+                                                    <div id="hotsearch2">
+
+                                                    </div>
+                                                    
+                                                </div>
+                                            </search>
+                                        </div>
+                            </li>
+                        </ul>
+            </div>
+        </header>   
+</body>
+<script>
+    function $(e)
+{
+    return document.querySelector(e)
+}
+function dele(index){
+    let myarr=JSON.parse(localStorage.getItem('array'));
+    myarr.splice(index,1)
+        localStorage.setItem('array',JSON.stringify(myarr))
+        let out=" "
+        myarr.forEach((value,index)=>{
+            
+            out+=
+        `
+        <ul class="history">
+          <div class="box">
+             <img src="./img/shizong.png" alt="">
+          </div>
+             <p>${value}</p>
+          <div class="box_x" onclick="dele(${index})">
+             <img src="./img/dacha.png" alt="">
+          </div>    
+        </ul>
+        `  
+        })
+        $(".jl").innerHTML=out
+    }
+</script>
+<script src="./promise.js"></script>
+<script type="module">
+import mypromise from './promise.js'
+///////////////////////////////////////////////封面渲染///////////////////////////////////////////////////////////
+function $(e)
+{
+    return document.querySelector(e)
+}
+let wan
+
+mypromise("http://localhost:3000/personalized").then(data=>{
+    let output=""
+    data.result.slice(0,6).forEach(value=>{
+    wan=(value.playCount/10000).toFixed(1)
+    output+=
+    `
+        
+          <li>
+            <a href="one_img.html?id=${value.id}&?pic=${value.picUrl}">
+            <div>
+              <p>
+                <img src="./img/ears.png" alt="">
+                <span>${wan}万</span>
+              </p>
+                <img src="${value.picUrl}" alt="">
+                <span>${value.name}</span>
+            </div>
+            </a>
+           </li> 
+         
+    ` 
+    })
+   $("#cover").innerHTML=output
+})
+
+////////////////////////////////////////////////////最新歌曲渲染///////////////////////////////////////////////////////
+
+mypromise("http://localhost:3000/personalized/newsong").then(data=>{
+    let output=""
+    data.result.forEach(value=>{
+        let singers ="";
+        value.song.artists.forEach(val=>{ singers+= val.name+" "})
+           
+        output+=
+      
+        `
+        <a href="play.html?id=${value.id}">
+        <ul>
+            <li>
+             <ul class="left">
+             <li>
+             <p>${value.name}</p>
+             <span>${value.song.alias}</span>
+             </li>
+             <li class="sq_box">
+             <div class="sq"></div>
+             <span>${singers}-${value.song.album.name}</span>
+             </li>
+            </ul>
+            </li>
+            <li class="bo">
+               <div class="bf"></div>
+            </li>
+        </ul>
+        </a>
+        `
+    //})
+    })
+    $(".list").innerHTML=output   
+})
+
+/////////////////////////////////////////////////热歌榜渲染////////////////////////////////////////////////////////////
+
+mypromise("http://localhost:3000/top/list?idx=1").then(data=>{
+    let n=0
+    let output=""
+    data.playlist.tracks.forEach(value=>{
+        n++
+        // value.ar.forEach(v1=>{
+        let singers ="";
+        value.ar.forEach(val=>{ singers+= val.name+" "})
+        output+=
+    `
+    <a href="play.html?id=${value.id}">
+    <ul> 
+        <li class="num">
+           <p>${n}</p>
+        </li>
+        <li class="intro">
+        <ul>
+            <li>
+            <p>${value.name}</p>
+            <span>${value.alia}</span>
+            </li>
+            <li>
+            <div class="small_box">
+            <div class="sq"></div>
+            <span>${singers}</span>
+            </div>
+            </li>
+         </ul>
+         </li>
+         <li class="bo">
+         <div class="bf"></div>
+         </li>
+     </ul>
+    </a>
+    `
+    })
+    $(".hotlist").innerHTML=output
+    })
+
+//////////////////////////////////////////////////////热门搜索气泡渲染//////////////////////////////////////////////////////
+    
+    mypromise("http://localhost:3000/search/hot").then(data=>{
+        
+        let output=""
+        data.result.hots.forEach(value=>{
+        output+=
+        `
+            <li class="li1">
+               <span class="key">${value.first}</span>
+            </li>
+        `
+        })
+        $(".list1").innerHTML=output  
+        let key=document.querySelectorAll(".key")
+        for(let i=0;i<key.length;i++){  
+
+        key[i].onclick=function(){
+            $("#hotsearch1").style.display="none"
+        $("#hotsearch2").style.display="block"
+            $("#search").value=key[i].innerHTML
+            let array = JSON.parse(localStorage.getItem('array'));
+        if(array==null){
+            console.log("现在为空");
+            let data=[];
+            data.push(key[i].innerHTML);
+            localStorage.setItem('array',JSON.stringify(data));
+        }
+        if(array.indexOf(key[i].innerHTML)!=-1){
+
+        }else{
+            array.unshift(key[i].innerHTML);
+            localStorage.setItem('array',JSON.stringify(array));
+        }
+
+
+        mypromise("http://localhost:3000/search?limit=100&offset=10&keywords="+key[i].innerHTML).then(data=>{
+        let output=""
+        console.log(data)
+        data.result.songs.forEach(value=>{
+            let singers=""
+            value.artists.forEach(value1=>{ singers+= value1.name+" " })
+        output+=
+        `
+        <a href="play.html?id=${value.id}">
+        <ul>
+            <li>
+             <ul class="left">
+             <li>
+             <p>${value.name}</p>
+             <span>${value.alias}</span>
+             </li>
+             <li class="sq_box">
+             <div class="sq"></div>
+             <span>${singers}-${value.album.name}</span>
+             </li>
+            </ul>
+            </li>
+            <li class="bo">
+               <div class="bf"></div>
+            </li>
+        </ul>
+        `
+    })
+    $("#hotsearch2").innerHTML=output
+    })
+            }
+        }  
+    })
+    
+    
+
+    
+    
+///////////////////////////////////////////////搜索关键词提示推荐////////////////////////////////////////////////////
+    $("#search").onkeyup=function(){
+        $(".jl").style.display="none"
+        let search=$("#search").value
+        if(search=="")
+        {
+        $(".jl").style.display="block"
+        mypromise("http://localhost:3000/search/hot").then(data=>{
+        let output=""
+        let output1=""
+        output1=
+        `
+        <h3>热门搜索</h3>
+        `
+        $(".title1").innerHTML=output1
+        data.result.hots.forEach(value=>{
+        output+=
+        `
+            <li id="li1">
+               <span id="key">${value.first}</span>
+            </li>
+        `
+        })
+        $(".list1").innerHTML=output    
+    })
+        }
+        else{
+            mypromise("http://localhost:3000/search/suggest?type=mobile&keywords="+search).then(data=>{
+        let output1=""
+        let output2=""
+        data.result.allMatch.forEach(value=>{
+        output1=
+        `
+        <ul class="sear">
+          <li>搜索"${search}"</li>
+        </ul>
+        `
+        $(".title1").innerHTML=output1
+        output2+=
+        `
+        <ul class="fdj">
+          <li>
+              <div class="box">
+                <img src="./img/fdj.png" alt="">
+              </div>
+              <p>${value.keyword}</p>
+          </li>
+      </ul>
+        `
+        })
+    
+        $(".list1").innerHTML=output2
+    })
+}
+        }
+    
+
+///////////////////////////////////////////////////搜索框点击叉号清楚数据/////////////////////////////////////////////////
+$(".input_pic").onclick=function(){
+    $("#hotsearch1").style.display="block"
+    $("#hotsearch2").style.display="none"
+    $("#search").value=""
+    $(".jl").style.display="block"
+    $(".input_pic").style.display="none";
+    $("#search").onfocus=function(){
+        $(".input_pic").style.display="block";
+    }
+    mypromise("http://localhost:3000/search/hot").then(data=>{
+        let output=""
+        let output1=""
+        data.result.hots.forEach(value=>{
+        output1=
+        `
+        <h3>热门搜索</h3>
+        `
+        $(".title1").innerHTML=output1
+        output+=
+        `
+            <li class="li1">
+               <span class="key">${value.first}</span>
+            </li>
+        `
+        })
+        $(".list1").innerHTML=output    
+    })
+        let myarr=JSON.parse(localStorage.getItem('array'));
+        let out=""
+        myarr.forEach((value,index)=>{   
+            out+=
+            `
+            <ul class="history">
+            <div class="box">
+                <img src="./img/shizong.png" alt="">
+            </div>
+                <p>${value}</p>
+            <div class="box_x" onclick="dele(${index})">
+                <img src="./img/dacha.png" alt="">
+            </div>    
+            </ul>
+            `  
+        })
+        $(".jl").innerHTML=out
+}
+///////////////////////////////////////////////////////////////搜索出来的歌曲渲染////////////////////////////////////////////////////
+
+$("#search").onkeypress=function(){
+        $("#hotsearch1").style.display="none"
+        $("#hotsearch2").style.display="block"
+        let search=$("#search").value; 
+        if(search!="")
+        {
+        let array = JSON.parse(localStorage.getItem('array'));
+        if(array==null){
+            console.log("现在为空");
+            let data=[];
+            data.push(search);
+            localStorage.setItem('array',JSON.stringify(data));
+        }
+        if(array.indexOf(search)!=-1){
+            
+        }else{
+            array.unshift(search);
+            localStorage.setItem('array',JSON.stringify(array));
+        }
+        let output
+        mypromise("http://localhost:3000/search?limit=100&offset=10&keywords="+search).then(data=>{
+        let output=""
+        let output1=""
+        data.result.songs.forEach(value=>{
+            let singers=""
+            value.artists.forEach(value1=>{ singers+= value1.name+" " })
+        output+=
+        `
+        <a href="play.html?id=${value.id}">
+        <ul>
+            <li>
+             <ul class="left">
+             <li>
+             <p>${value.name}</p>
+             <span>${value.alias}</span>
+             </li>
+             <li class="sq_box">
+             <div class="sq"></div>
+             <span>${singers}-${value.album.name}</span>
+             </li>
+            </ul>
+            </li>
+            <li class="bo">
+               <div class="bf"></div>
+            </li>
+        </ul>
+        `
+    })
+    $("#hotsearch2").innerHTML=output
+    })
+        }
+        
+    }
+
+/////////////////////////////历史记录渲染////////////////////////////////////////////////////////////////////////////////
+        let myarr=JSON.parse(localStorage.getItem('array'));
+        // console.log(myarr)
+        let out=""
+        myarr.forEach((value,index)=>{   
+            out+=
+            `
+            <ul class="history">
+            <div class="box">
+                <img src="./img/shizong.png" alt="">
+            </div>
+                <p class="history_p">${value}</p>
+            <div class="box_x" onclick="dele(${index})">
+                <img src="./img/dacha.png" alt="">
+            </div>    
+            </ul>
+            `  
+        })
+        $(".jl").innerHTML=out
+    
+        let p=document.querySelectorAll(".history_p")
+        for(let i=0;i<p.length;i++){  
+
+        p[i].onclick=function(){
+        $("#hotsearch1").style.display="none"
+        $("#hotsearch2").style.display="block"
+            $("#search").value=p[i].innerHTML
+            let array = JSON.parse(localStorage.getItem('array'));
+        if(array==null){
+            console.log("现在为空");
+            let data=[];
+            data.push(p[i].innerHTML);
+            localStorage.setItem('array',JSON.stringify(data));
+        }
+        if(array.indexOf(p[i].innerHTML)!=-1){
+
+        }else{
+            array.unshift(p[i].innerHTML);
+            localStorage.setItem('array',JSON.stringify(array));
+        }
+        
+        
+        mypromise("http://localhost:3000/search?limit=100&offset=10&keywords="+p[i].innerHTML).then(data=>{
+        let output=""
+        console.log(data)
+        data.result.songs.forEach(value=>{
+            let singers=""
+            value.artists.forEach(value1=>{ singers+= value1.name+" " })
+        output+=
+        `
+        <a href="play.html?id=${value.id}">
+        <ul>
+            <li>
+            <ul class="left">
+            <li>
+            <p>${value.name}</p>
+            <span>${value.alias}</span>
+            </li>
+            <li class="sq_box">
+            <div class="sq"></div>
+            <span>${singers}-${value.album.name}</span>
+            </li>
+            </ul>
+            </li>
+            <li class="bo">
+            <div class="bf"></div>
+            </li>
+        </ul>
+        `
+        })
+        $("#hotsearch2").innerHTML=output
+        })
+
+            }
+} 
+</script>
+</html>
