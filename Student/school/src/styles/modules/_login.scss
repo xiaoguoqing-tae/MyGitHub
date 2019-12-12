@@ -1,0 +1,59 @@
+  .login{
+        background: #00BFFF;
+        width: 100%;
+        height: 640px;
+        .zt{
+            font-family: "STHupo";
+            color: white;
+            font-size: 70px;
+            padding: 100px 0 40px 0;
+        }
+        .van-cell-group{
+            background: #00BFFF;
+            position: relative;
+        }
+        .van-cell{
+            width: 80%;
+            margin-bottom: 20px;
+            margin-left: 10%;
+            border: solid 1px white;
+            border-radius: 20px;
+            background: #00BFFF;
+            .van-field__control{
+                color: white;
+            }
+        }
+        .van-cell-group{
+            margin-top: 20px;
+        }
+        .van-button{
+            margin-top: 30px;
+            width: 80%;
+            border-radius: 20px;
+        }
+        .com{
+            position: fixed;
+            bottom: 0;
+            left: 25%;
+            font-size: 20px;
+        }
+    }
+
+.register{
+    .van-field{
+        height: 50px;
+    }
+    .van-button{
+        width: 80%;
+        margin: 20px 0 0 0;
+        border-radius: 20px;
+    }
+    .xy{
+        margin: 10px;
+        span{
+            color: #00BFFF;
+        }
+    }
+}
+    
+

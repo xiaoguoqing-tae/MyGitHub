@@ -1,0 +1,63 @@
+.approval{
+    margin-bottom: 15px;
+    width: 90%;
+    height: auto;
+    margin-left: 5%;
+    background: white;
+    border-radius: 10px;
+    .cardItem{
+        display: flex;
+        .title {
+            float: left;
+            padding-left: 10px;
+            padding-top: 10px;
+          }
+        .content{
+            padding: 10px 0 0 10px;
+        }
+    }
+
+    .van-button {
+        margin: 19px 0 0 10px;
+      }
+      .van-divider--hairline{
+          margin: 16px 0;
+      }
+   
+}
+.van-tabs {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    .van-tabs__wrap {
+        height: 40px;
+        .van-tabs__nav--card {
+            box-sizing: border-box;
+            width: 250px;
+            margin: 0 60px;
+            border: 1px solid #0ac0ee;
+            border-right: 1px solid #0ac0ee;
+            border-radius: 8px;
+            .van-tab{
+                color:  #0ac0ee;;
+            }
+            .van-tab--active{
+                background: #0ac0ee ;
+                color: white;
+            }
+            .van-cell__title {
+                color: black;
+              }
+          }
+      }
+  }
+.wait,.appro,.end{
+    margin-top: 20px;
+    position: relative;
+    img{
+        position: absolute;
+        top: 20px;
+        left: 250px;
+        width: 80px;
+        height: 80px;
+    }
+}

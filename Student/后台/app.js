@@ -1,0 +1,88 @@
+//引入自定义二次封装框架
+const app=require("./server/core/server");
+//引入业务模块
+const user=require("./server/module/user")
+app.post("/login",(req,res)=>{
+    user.login(req,res);
+})
+app.post("/register",(req,res)=>{
+    user.register(req,res);
+})
+app.post("/notice",(req,res)=>{
+    user.notice(req,res);
+})
+app.post('/writenotice',(req,res)=>{
+    user.writenotice(req,res);
+})
+app.post("/changestates",(req,res)=>{
+    user.changestates(req,res)
+})
+app.post("/detail",(req,res)=>{
+    user.detail(req,res)
+})
+ app.get("/work",(req,res)=>{
+     user.work(req,res);
+ })
+app.get('/waitwork',(req,res)=>{
+    user.waitwork(req,res);
+})
+app.post('/detailwork',(req,res)=>{
+    user.detailwork(req,res);
+})
+app.post('/gosentwork',(req,res)=>{
+    user.gosentwork(req,res);
+})
+app.post("/delwaitwork",(req,res)=>{
+    user.delwaitwork(req,res);
+})
+app.post("/delsentwork",(req,res)=>{
+    user.delsentwork(req,res);
+})
+app.post('/sentwork',(req,res)=>{
+    user.sentwork(req,res)
+})
+app.post('/sentwaitwork',(req,res)=>{
+    user.sentwaitwork(req,res);
+})
+app.post('/sentnotify',(req,res)=>{
+    user.sentnotify(req,res)
+})
+app.post('/waitnotify',(req,res)=>{
+    user.waitnotify(req,res)
+})
+app.get('/getsentednotify',(req,res)=>{
+    user.getsentednotify(req,res)
+})
+app.get('/getwaitnotify',(req,res)=>{
+    user.getwaitnotify(req,res)
+})
+app.post('/notifyDetail',(req,res)=>{
+    user.notifyDetail(req,res)
+})
+app.post('/waitnotifyDetail',(req,res)=>{
+    user.waitnotifyDetail(req,res)
+})
+app.post('/delwaitnotify',(req,res)=>{
+    user.delwaitnotify(req,res)
+})
+app.post('/getleave',(req,res)=>{
+    user.getleave(req,res)
+})
+app.post('/sentleave',(req,res)=>{
+    user.sentleave(req,res)
+})
+app.post('/yesleave',(req,res)=>{
+    user.yesleave(req,res)
+})
+app.post('/noleave',(req,res)=>{
+    user.noleave(req,res)
+})
+app.post('/recharge',(req,res)=>{
+    user.recharge(req,res)
+})
+app.post('/pay',(req,res)=>{
+    user.pay(req,res)
+})
+
+
+

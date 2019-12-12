@@ -1,0 +1,98 @@
+div{
+    .notifyCard{
+    background: white;
+    width: 95%;
+    margin-left: 2.5%;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    .top{
+        padding-top: 10px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .van-divider--hairline{margin:6px 0 16px 0;}
+    .center{
+        p{
+            word-wrap: break-word;
+            word-break: break-all;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+        }
+    .bottom{
+        padding: 20px;
+        position: relative;
+        .date{
+            float: left;
+        }
+        span{
+            position: absolute;
+            right: 40px;
+        }
+        .van-icon-arrow{
+            position: absolute;
+            font-size: 18px;
+            bottom: 3px;
+        }
+    }
+}
+}
+.van-button--large{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+.sentnotify{
+    .upload{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        background-color: white;
+        margin-bottom: 15px;
+        p{
+            text-align:left;
+            padding: 15px;
+        }
+        .van-uploader__upload{
+            margin-left: 10px;
+            height: 50px;
+            width: 50px;
+        }
+    }
+    .van-button--normal{
+        margin-top: 15px;
+        width: 90%;
+        border-radius: 5px;
+    }
+}
+.detail{
+    .usermsg{
+    height: 100%;
+    display: flex;
+    padding: 0 50px 0 50px;
+    background: white;
+    img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    }
+    }
+    .noticecard{
+        background: white;
+        width: 100%;
+        height: auto;
+        img{
+            width: 90%;
+            margin-left: 5%;
+            margin-right: 5%;
+            height: 180px;
+            float: left;
+        }
+    
+    }
+}

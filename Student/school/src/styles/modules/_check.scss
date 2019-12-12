@@ -1,0 +1,49 @@
+.check{
+    width: 100%;
+    height: 100%;
+    .datepick{
+        ul{
+            background: white;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            li{
+                padding: 10px 10px 0 10px;
+            }
+        }
+        .date{
+            margin-top: 2px;
+            overflow: hidden;
+            display: flex;
+            flex-wrap: wrap;
+            .van-icon{
+                position: relative;
+                left: 45%;
+                top:30px;
+            }
+            li{
+                width: 14.28%;
+            }
+        }
+    }
+    .state{
+        margin-top: 5px;
+        background: #99CCCC;
+        display: flex;
+        justify-content: center;
+        .van-circle{
+            margin: 16px;
+        }
+        div{
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    .echarts{
+        margin-top: 20px;
+        background: white;
+        .van-tabs{
+            top: 20px;
+        }
+    }
+}
